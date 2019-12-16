@@ -18,7 +18,6 @@ if (( $(ps -ef | grep -v grep | grep consul | wc -l) > 0 ))
 then
 echo "Stopping and removing consul"
 sudo systemctl stop consul
-sudo systemctl stop consul
 sudo systemctl disable consul
 sudo rm /etc/systemd/system/consul.service
 sudo systemctl daemon-reload
@@ -66,7 +65,7 @@ sudo mv consul /usr/local/bin/
 consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
 
-sudo cp nomad.service /etc/systemd/system/consul.service
+sudo cp consul.service /etc/systemd/system/consul.service
 sudo chmod 644 /etc/systemd/system/consul.service
 
 sudo rm -r /etc/consul.d
