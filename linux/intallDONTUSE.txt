@@ -1,0 +1,143 @@
+--https://www.nomadproject.io/guides/install/production/deployment-guide.html
+
+--download 
+export NOMAD_VERSION="0.10.2"
+curl --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
+
+unzip nomad_${NOMAD_VERSION}_linux_amd64.zip
+sudo chown root:root nomad
+sudo mv nomad /usr/local/bin/
+-- make sure nomad is active
+nomad version
+
+--Create a data directory for Nomad.
+sudo mkdir --parents /opt/nomad
+
+--Create a Nomad service
+sudo touch /etc/systemd/system/nomad.service
+
+sudo vi /etc/systemd/system/nomad.service
+
+paste:
+[Unit]
+Description=Nomad
+Documentation=https://nomadproject.io/docs/
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart=/usr/local/bin/nomad agent  -config /etc/nomad.d/nomad.hcl -config /etc/nomad.d/client.hcl
+KillMode=process
+KillSignal=SIGINT
+LimitNOFILE=infinity
+LimitNPROC=infinity
+Restart=on-failure
+RestartSec=2
+StartLimitBurst=3
+StartLimitIntervalSec=10
+TasksMax=infinity
+
+[Install]
+WantedBy=multi-user.target
+
+--quit
+:wq!
+
+
+Create a configuration file at /etc/nomad.d/nomad.hcl:
+
+sudo mkdir --parents /etc/nomad.d
+sudo chmod 700 /etc/nomad.d
+sudo touch /etc/nomad.d/nomad.hcl
+
+
+sudo vi /etc/nomad.d/nomad.hcl
+
+paste:
+
+data_dir = "/opt/nomad"
+
+--quit
+:wq!
+
+sudo touch /etc/nomad.d/client.hcl
+sudo vi /etc/nomad.d/client.hcl
+
+client {
+  enabled       = true
+  options {
+    "driver.raw_exec.enable" = "1"
+  }
+}
+
+--quit
+:wq!
+
+paste:
+
+sudo systemctl enable nomad
+sudo systemctl start nomad
+sudo systemctl status nomad
+
+
+
+-- install consul
+
+CONSUL_VERSION="1.6.2"
+curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
+unzip consul_${CONSUL_VERSION}_linux_amd64.zip
+sudo chown root:root consul
+sudo mv consul /usr/local/bin/
+consul --version
+consul -autocomplete-install
+complete -C /usr/local/bin/consul consul
+
+--create service
+sudo touch /etc/systemd/system/consul.service
+
+sudo vi /etc/systemd/system/consul.service
+
+paste:
+
+[Unit]
+Description="HashiCorp Consul - A service mesh solution"
+Documentation=https://www.consul.io/
+Requires=network-online.target
+After=network-online.target
+ConditionFileNotEmpty=/etc/consul.d/consul.hcl
+
+[Service]
+Type=notify
+ExecStart=/usr/local/bin/consul agent -config-dir=/etc/consul.d/consul.hcl
+ExecReload=/usr/local/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+
+:wq
+
+sudo mkdir --parents /etc/consul.d
+sudo touch /etc/consul.d/consul.hcl
+sudo chown --recursive consul:consul /etc/consul.d
+sudo chmod 640 /etc/consul.d/consul.hcl
+
+sudo vi /etc/consul.d/consul.hcl
+paste:
+
+
+data_dir = "/opt/consul"
+retry_join = ["10.0.1.68"]
+
+performance {
+  raft_multiplier = 1
+}
+
+
+:wq
+
+
+
