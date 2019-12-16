@@ -12,6 +12,7 @@ ExecReload=/usr/local/bin/consul reload
 KillMode=process
 Restart=on-failure
 LimitNOFILE=65536
+StartLimitIntervalSec=0
 
 [Install]
 WantedBy=multi-user.target

@@ -1,5 +1,29 @@
-echo Installing unzip
+echo **Installing unzip
 sudo apt install unzip
+
+
+
+if (( $(ps -ef | grep -v grep | grep nomad | wc -l) > 0 ))
+then
+echo "Stopping and removing Nomad"
+sudo systemctl stop nomad
+sudo systemctl disable nomad
+sudo rm /etc/systemd/system/nomad.service
+sudo systemctl daemon-reload
+sudo systemctl reset-failed
+
+fi
+
+if (( $(ps -ef | grep -v grep | grep consul | wc -l) > 0 ))
+then
+echo "Stopping and removing consul"
+sudo systemctl stop consul
+sudo systemctl stop consul
+sudo systemctl disable consul
+sudo rm /etc/systemd/system/consul.service
+sudo systemctl daemon-reload
+sudo systemctl reset-failed
+fi
 
 export NOMAD_VERSION="0.10.2"
 echo **Downloading nomad ${NOMAD_VERSION}
