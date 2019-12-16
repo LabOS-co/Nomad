@@ -1,4 +1,6 @@
-#download 
+echo Installing unzip
+sudo apt install unzip
+
 export NOMAD_VERSION="0.10.2"
 echo **Downloading nomad ${NOMAD_VERSION}
 curl --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
