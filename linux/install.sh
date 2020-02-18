@@ -62,7 +62,7 @@ unzip consul_${CONSUL_VERSION}_linux_amd64.zip
 sudo chown root:root consul
 sudo mv consul /usr/local/bin/
 #consul --version
-consul -autocomplete-install
+#consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
 
 sudo cp consul.service /etc/systemd/system/consul.service
@@ -72,5 +72,17 @@ sudo rm -r /etc/consul.d
 sudo mkdir --parents /etc/consul.d
 sudo chmod 700 /etc/consul.d
 sudo cp consul.hcl /etc/consul.d/consul.hcl
+sudo chmod a+rwx /etc/consul.d
 
+echo **Running consul service
+sudo systemctl enable consul
+sudo systemctl start consul
 
+#sudo systemctl status consul
+
+sudo ufw allow 4647
+sudo ufw allow 4646
+sudo ufw allow 8500
+sudo ufw allow 8600
+sudo ufw allow 8301
+sudo ufw allow 8300
