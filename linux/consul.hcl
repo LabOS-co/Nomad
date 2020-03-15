@@ -1,5 +1,5 @@
 data_dir = "/opt/consul"
-retry_join = ["10.0.1.68"]
+retry_join = ["REPLACE_ME_WITH_IP"]
 
 performance {
   raft_multiplier = 1

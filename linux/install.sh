@@ -24,7 +24,7 @@ sudo systemctl daemon-reload
 sudo systemctl reset-failed
 fi
 
-export NOMAD_VERSION="0.10.2"
+export NOMAD_VERSION="0.10.4"
 echo **Downloading nomad ${NOMAD_VERSION}
 curl --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
 echo **unzipping...
@@ -56,7 +56,7 @@ sudo systemctl start nomad
 
 # install consul
 
-export CONSUL_VERSION="1.6.2"
+export CONSUL_VERSION="1.7.1"
 curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
 unzip consul_${CONSUL_VERSION}_linux_amd64.zip
 sudo chown root:root consul

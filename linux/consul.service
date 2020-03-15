@@ -7,7 +7,7 @@ ConditionFileNotEmpty=/etc/consul.d/consul.hcl
 
 [Service]
 Type=notify
-ExecStart=/usr/local/bin/consul agent -config-dir=/etc/consul.d/consul.hcl  -bind '{{ GetInterfaceIP "eth0" }}' -client '{{ GetInterfaceIP "eth0" }}' -server -ui 
+ExecStart=/usr/local/bin/consul agent -config-dir=/etc/consul.d/consul.hcl  -bind '{{ GetInterfaceIP "eth0" }}' -client '0.0.0.0' -ui 
 ExecReload=/usr/local/bin/consul reload
 KillMode=process
 Restart=on-failure
