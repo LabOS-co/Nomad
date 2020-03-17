@@ -1,6 +1,12 @@
 echo **Installing unzip
 sudo apt install unzip
 
+sudo ufw allow 4647
+sudo ufw allow 4646
+sudo ufw allow 8500
+sudo ufw allow 8600
+sudo ufw allow 8301
+sudo ufw allow 8300
 
 
 if (( $(ps -ef | grep -v grep | grep nomad | wc -l) > 0 ))
@@ -8,6 +14,7 @@ then
 echo "Stopping and removing Nomad"
 sudo systemctl stop nomad
 sudo systemctl disable nomad
+sudo rm -r /opt/nomad
 sudo rm /etc/systemd/system/nomad.service
 sudo systemctl daemon-reload
 sudo systemctl reset-failed
@@ -19,6 +26,7 @@ then
 echo "Stopping and removing consul"
 sudo systemctl stop consul
 sudo systemctl disable consul
+sudo rm -r /opt/consul
 sudo rm /etc/systemd/system/consul.service
 sudo systemctl daemon-reload
 sudo systemctl reset-failed
@@ -56,7 +64,7 @@ sudo systemctl start nomad
 
 # install consul
 
-export CONSUL_VERSION="1.7.1"
+export CONSUL_VERSION="1.7.2"
 curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
 unzip consul_${CONSUL_VERSION}_linux_amd64.zip
 sudo chown root:root consul
@@ -79,10 +87,3 @@ sudo systemctl enable consul
 sudo systemctl start consul
 
 #sudo systemctl status consul
-
-sudo ufw allow 4647
-sudo ufw allow 4646
-sudo ufw allow 8500
-sudo ufw allow 8600
-sudo ufw allow 8301
-sudo ufw allow 8300
