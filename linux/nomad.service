@@ -6,7 +6,7 @@ After=network-online.target
 
 [Service]
 ExecReload=/bin/kill -HUP $MAINPID
-ExecStart=/usr/local/bin/nomad agent  -data-dir=/opt/nomad -config /etc/nomad.d/client.hcl
+ExecStart=/usr/local/bin/nomad agent -data-dir=/opt/nomad -config /etc/nomad.d/client.hcl
 User=ubuntu
 Group=ubuntu
 KillMode=process

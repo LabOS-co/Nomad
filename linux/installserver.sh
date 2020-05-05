@@ -79,7 +79,7 @@ sudo chmod 644 /etc/systemd/system/consul.service
 sudo rm -r /etc/consul.d
 sudo mkdir --parents /etc/consul.d
 sudo chmod 700 /etc/consul.d
-sudo cp consulserver.hcl /etc/consul.d/consulserver.hcl
+sudo cp consulserver.hcl /etc/consul.d/consul.hcl
 sudo chmod a+rwx /etc/consul.d
 
 echo **Running consul service
