@@ -32,7 +32,7 @@ sudo systemctl daemon-reload
 sudo systemctl reset-failed
 fi
 
-export NOMAD_VERSION="0.10.4"
+export NOMAD_VERSION="0.11.1"
 echo **Downloading nomad ${NOMAD_VERSION}
 curl --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
 echo **unzipping...
