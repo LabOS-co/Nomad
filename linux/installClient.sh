@@ -1,5 +1,5 @@
 echo **Installing unzip
-sudo apt install unzip
+sudo apt install unzip -y
 
 sudo ufw allow 4647
 sudo ufw allow 4646
@@ -36,7 +36,7 @@ export NOMAD_VERSION="0.11.1"
 echo **Downloading nomad ${NOMAD_VERSION}
 curl --remote-name https://releases.hashicorp.com/nomad/${NOMAD_VERSION}/nomad_${NOMAD_VERSION}_linux_amd64.zip
 echo **unzipping...
-unzip nomad_${NOMAD_VERSION}_linux_amd64.zip
+unzip -o nomad_${NOMAD_VERSION}_linux_amd64.zip
 sudo chown root:root nomad
 sudo mv nomad /usr/local/bin/
 
@@ -66,7 +66,7 @@ sudo systemctl start nomad
 
 export CONSUL_VERSION="1.7.2"
 curl --silent --remote-name https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip
-unzip consul_${CONSUL_VERSION}_linux_amd64.zip
+unzip -o consul_${CONSUL_VERSION}_linux_amd64.zip
 sudo chown root:root consul
 sudo mv consul /usr/local/bin/
 #consul --version
