@@ -4,6 +4,7 @@ client {
   max_kill_timeout = "120s"
   options {
     "driver.raw_exec.enable" = "1"
+    "docker.volumes.enabled" = "1"
   }
 }
 
