@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+.scan-gate/*.sh  text eol=lf
+
+.scan-gate/*.ps1 text eol=lf
+
+.scan-gate/*.yml text eol=lf
+
+.scan-gate/*.yaml text eol=lf
